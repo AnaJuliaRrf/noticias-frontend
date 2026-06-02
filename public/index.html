@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agregador de Notícias - CI/CD</title>
+  <title>Agregador de Notícias - Docker + Nginx</title>
   <style>
+    /* O SEU CSS ORIGINAL RECONECTADO */
     * {
       margin: 0;
       padding: 0;
@@ -157,12 +158,43 @@
       margin-bottom: 20px;
       border-left: 4px solid #3c3;
     }
+
+    /* ESTILO DA NOVA SEÇÃO DE TESTE DOCKER */
+    .docker-test-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f0f4ff;
+      border-radius: 8px;
+      border-left: 4px solid #764ba2;
+      text-align: center;
+    }
+
+    .docker-test-section h3 {
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .resposta-api {
+      margin-top: 15px;
+      padding: 10px;
+      background: #e4ebff;
+      border-radius: 6px;
+      font-weight: 600;
+      color: #2c5364;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>📰 Agregador de Notícias</h1>
-    <p class="version">v1.0.1 - CI/CD com Vercel + Render</p>
+    <p class="version">v1.1.0 - Docker + Nginx</p>
+
+    <div class="docker-test-section">
+      <h3>🧪 Teste de Container Docker</h3>
+      <p style="color: #666; font-size: 14px; margin-bottom: 10px;">Clique abaixo para testar a comunicação entre os containers (Front -> Back):</p>
+      <button onclick="chamarAPI()">Testar API (v1)</button>
+      <div id="resposta" class="resposta-api">Aguardando chamada...</div>
+    </div>
 
     <div id="mensagem"></div>
 
@@ -173,7 +205,7 @@
     </div>
 
     <div style="margin-bottom: 40px; padding: 20px; background: #f0f4ff; border-radius: 8px; border-left: 4px solid #667eea;">
-      <h3 style="margin-bottom: 15px;">➕ Adicionar Nova Notícia</h3>
+      <h3 style="margin-bottom: 15px; color: #333;">➕ Adicionar Nova Notícia</h3>
       <div class="form-group">
         <label>Título</label>
         <input type="text" id="titulo" placeholder="Ex: Novo recurso lançado" />

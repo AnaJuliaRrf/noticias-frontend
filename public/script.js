@@ -1,5 +1,12 @@
-// Configure a URL do seu backend aqui
-const API_URL = "https://noticias-backend-wmre.onrender.com";
+// Detecta se estamos rodando no Codespaces ou em produção (Vercel)
+const isCodespace = window.location.hostname.includes("github.dev");
+
+const API_URL = isCodespace 
+  ? "https://special-fortnight-7vw5pwqv7pg4c4ww-5000.app.github.dev" // URL LOCAL do Codespace
+  : "https://noticias-backend-wmre.onrender.com"; // URL do Render
+
+console.log("Conectado ao ambiente:", isCodespace ? "Codespaces" : "Produção");
+console.log("API Endpoint:", API_URL);
 
 async function carregarNoticias() {
   const container = document.getElementById("noticias");
@@ -39,7 +46,7 @@ async function carregarNoticias() {
     mensagem.innerHTML = `
       <div class="error">
         ❌ Erro ao conectar ao backend: ${erro.message}
-        <br/><small>Verifique se a URL está correta: ${API_URL}</small>
+        <br/><small>Verifique se a URL está correta ou se a porta 5000 está Pública: ${API_URL}</small>
       </div>
     `;
     container.innerHTML = '';
@@ -90,6 +97,26 @@ async function criarNoticia() {
   } catch (erro) {
     console.error('Erro ao criar notícia:', erro);
     mensagem.innerHTML = `<div class="error">❌ Erro ao criar notícia: ${erro.message}</div>`;
+  }
+}
+
+// Função assíncrona responsável por chamar a API (com o nome correto ChamarAPI)
+async function chamarAPI() {
+  const respostaElemento = document.getElementById("resposta");
+  respostaElemento.textContent = "Conectando ao container...";
+
+  try {
+    const resposta = await fetch(`${API_URL}/v1`);
+    
+    if (!resposta.ok) {
+      throw new Error(`Erro HTTP: ${resposta.status}`);
+    }
+    
+    const dados = await resposta.json();
+    respostaElemento.textContent = `${dados.message} chamada em ${dados.chamada_em}`;
+  } catch (erro) {
+    console.error('Erro ao conectar na rota /v1:', erro);
+    respostaElemento.textContent = "Erro ao conectar ao container da API.";
   }
 }
 
